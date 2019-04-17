@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+</head>
+<body>
+<div>
+    <h3>用户列表</h3>
+    <table border="1px">
+        <thead>
+        <tr>
+            <th>用户id</th>
+            <th>用户名</th>
+            <th>代码记录</th>
+            <th>选项</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.codelines }}</td>
+                    <td><a href="">上传代码</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

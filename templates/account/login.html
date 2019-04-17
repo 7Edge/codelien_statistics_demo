@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<div>
+    <h3>登陆页面</h3>
+    <form action="{{ url_for('account_bp.login') }}" method="post">
+        <label for="loginname">用户名：</label>
+        <input type="text" name="loginname" id="loginname" placeholder="输入用户名">
+        <hr>
+        <label for="password">密码：</label>
+        <input type="password" name="password" id="password" placeholder="输入密码">
+        <input type="submit" value="登陆">
+    </form>
+</div>
+</body>
+</html>

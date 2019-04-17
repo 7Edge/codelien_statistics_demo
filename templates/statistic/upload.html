@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上传代码</title>
+</head>
+<body>
+<div>
+    <h3>上传代码文件</h3>
+    <p>当前用户：{{ session.username }}</p>
+    <form action="{{ url_for('statistic.upload_code') }}">
+        <label for="">上传代码文件：</label>
+        <input type="file" name="codefile">
+        <input type="submit" value="提交代码">
+    </form>
+
+</div>
+</body>
+</html>
