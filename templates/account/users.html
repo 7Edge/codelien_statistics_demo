@@ -7,13 +7,13 @@
 <body>
 <div>
     <h3>用户列表</h3>
+    <p><a href="{{ url_for('statistic.upload_code') }}">上传代码</a></p>
     <table border="1px">
         <thead>
         <tr>
             <th>用户id</th>
             <th>用户名</th>
-            <th>代码记录</th>
-            <th>选项</th>
+            <th>查看上传记录</th>
         </tr>
         </thead>
         <tbody>
@@ -21,8 +21,7 @@
                 <tr>
                     <td>{{ user.id }}</td>
                     <td>{{ user.username }}</td>
-                    <td>{{ user.codelines }}</td>
-                    <td><a href="">上传代码</a></td>
+                    <td><a href="{{ url_for('') }}"></a></td>
                 </tr>
             {% endfor %}
         </tbody>

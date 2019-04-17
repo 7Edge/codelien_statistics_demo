@@ -45,7 +45,7 @@ def users():
     try:
         connection = get_connection()
         with connection.cursor() as cursor:
-            sql = "select a.id, a.username, b.codelines from `account` a left join `code_statistics` b on a.id=b.user_id"
+            sql = "select id, username from `account`"
             cursor.execute(sql)
             result = cursor.fetchmany(size=50)
             print(result)
