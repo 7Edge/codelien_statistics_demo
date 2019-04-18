@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "76701b070376c3a85dc06c7860e2e2a7ea7f329172ecf21ea43e2f6c1f09f547"
+            "sha256": "9be1c76974c42d1bda1c2c8c6fac54e470412331b7c91a311ec2a0965d49b185"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -22,6 +22,14 @@
                 "sha256:5b94b49521f6456670fdb30cd82a4eca9412788a93fa6dd6df72c94d5a8ff2d7"
             ],
             "version": "==7.0"
+        },
+        "filetype": {
+            "hashes": [
+                "sha256:17a3b885f19034da29640b083d767e0f13c2dcb5dcc267945c8b6e5a5a9013c7",
+                "sha256:4967124d982a71700d94a08c49c4926423500e79382a92070f5ab248d44fe461"
+            ],
+            "index": "pypi",
+            "version": "==1.0.5"
         },
         "flask": {
             "hashes": [
@@ -85,6 +93,14 @@
             ],
             "index": "pypi",
             "version": "==0.9.3"
+        },
+        "pytz": {
+            "hashes": [
+                "sha256:303879e36b721603cc54604edcac9d20401bdbe31e1e4fdee5b9f98d5d31dfda",
+                "sha256:d747dd3d23d77ef44c6a3526e274af6efeb0a6f1afd5a69ba4d5be4098c8e141"
+            ],
+            "index": "pypi",
+            "version": "==2019.1"
         },
         "werkzeug": {
             "hashes": [

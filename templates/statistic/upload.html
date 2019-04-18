@@ -8,7 +8,7 @@
 <div>
     <h3>上传代码文件</h3>
     <p>当前用户：{{ session.username }}</p>
-    <form action="{{ url_for('statistic.upload_code') }}">
+    <form action="{{ url_for('statistic.upload_code') }}" method="post" enctype="multipart/form-data">
         <label for="">上传代码文件：</label>
         <input type="file" name="codefile">
         <input type="submit" value="提交代码">
