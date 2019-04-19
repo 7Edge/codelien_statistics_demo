@@ -41,7 +41,11 @@ def upload_code():
         return '上传文件失败'
 
     file_name = upload_file.filename
-    local_full_filename = os.path.join(STORE_PATH, str(uuid.uuid4()), file_name)
+    local_full_path = os.path.join(STORE_PATH, str(uuid.uuid4()))
+    if not os.path.exists(path=local_full_path):
+        os.mkdir(path=local_full_path)
+
+    local_full_filename = os.path.join(local_full_path, file_name)
 
     # 1. 将文件保存到本地
     upload_file.save(dst=local_full_filename)
@@ -53,7 +57,7 @@ def upload_code():
     if kind.extension == 'zip':
         # 2.1 如果时候压缩文件，先解压文件
         zipfile_obj = zipfile.ZipFile(local_full_filename)
-        zipfile_obj.extractall(path=STORE_PATH)
+        zipfile_obj.extractall(path=local_full_path)
         zipfile_obj.close()
         # 2.2 获取压缩文件中所有文件的行数
 
