@@ -35,6 +35,20 @@ def upload_code():
     if request.method == 'GET':
         return render_template('statistic/upload.html')
 
+    uid = session.get('user_id')
+    today = datetime.datetime.now().strftime('%Y-%m-%d')
+    # 一天只能提交一次代码
+    try:
+        connection = get_connection()
+        with connection.cursor() as cursor:
+            sql = "select * from code_statistics where user_id=%s and date = %s"
+            cursor.execute(sql, (uid, today))
+            data = cursor.fetchone()
+            if data:
+                return '今天已上传代码！'
+    finally:
+        connection.close()
+
     # 处理上传文件
     upload_file = request.files.get('codefile', None)
     if not upload_file:
@@ -59,16 +73,34 @@ def upload_code():
         zipfile_obj = zipfile.ZipFile(local_full_filename)
         zipfile_obj.extractall(path=local_full_path)
         zipfile_obj.close()
-        # 2.2 获取压缩文件中所有文件的行数
+        # 2.2 删除压缩文件
+        os.remove(local_full_filename)
 
+        # 2.3 获取压缩文件中所有文件的行数
+        for base_path, dir_list, file_list in os.walk(local_full_path):
+            print(base_path, dir_list, file_list)
+            for file in file_list:
+                file_path = os.path.join(base_path, file)
+                file_ext = file_path.rsplit('.', maxsplit=1)
+                if file_ext[1] != 'py':
+                    continue
+
+                file_num = 0
+                with open(file_path, 'rb') as fp:
+                    for line in fp:
+                        line = line.strip()  # 删除前后space
+                        if not line:
+                            continue
+                        if line.startswith(b'#'):  # 注释排除
+                            continue
+                        file_num += 1
+                line_cnt += file_num
     else:
         # 2.3 对于普通文件直接读取
         with open(local_full_filename, 'r') as fp:
             for line in fp:
                 line_cnt += 1
     # 3. 将提交代码写入到数据库中
-    uid = session.get('user_id')
-    today = datetime.datetime.now().strftime('%Y-%m-%d')
     try:
         connection = get_connection()
         with connection.cursor() as cursor:
