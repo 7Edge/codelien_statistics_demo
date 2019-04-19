@@ -8,6 +8,7 @@
 from flask import Blueprint, session, redirect, render_template, request, url_for
 
 from mysql_connection import get_connection
+from utils.encrypt import encrypt_pwd
 
 account_bp = Blueprint(name='account_bp', import_name=__name__)
 
@@ -24,7 +25,7 @@ def login():
         connection = get_connection()
         with connection.cursor() as cursor:
             sql = "select `id` from `account` where `username`=%s and `password`=%s"
-            cursor.execute(sql, (loginname, password))
+            cursor.execute(sql, (loginname, encrypt_pwd(password=password)))
             result = cursor.fetchone()
             pass
     finally:

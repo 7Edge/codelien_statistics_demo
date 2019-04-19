@@ -7,6 +7,7 @@
 
 #
 class BaseConfig(object):
+    PWD_SALT = b'sas3_e2&we%$^l234j'
     pass
 
 
