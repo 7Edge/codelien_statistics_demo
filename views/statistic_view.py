@@ -11,6 +11,7 @@ import os
 import zipfile
 import datetime
 import filetype
+import uuid
 
 from flask import Blueprint, request, session, render_template
 
@@ -40,7 +41,7 @@ def upload_code():
         return '上传文件失败'
 
     file_name = upload_file.filename
-    local_full_filename = os.path.join(STORE_PATH, file_name)
+    local_full_filename = os.path.join(STORE_PATH, str(uuid.uuid4()), file_name)
 
     # 1. 将文件保存到本地
     upload_file.save(dst=local_full_filename)

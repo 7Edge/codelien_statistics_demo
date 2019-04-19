@@ -8,6 +8,7 @@
 #
 class BaseConfig(object):
     PWD_SALT = b'sas3_e2&we%$^l234j'
+    MAX_CONTENT_LENGTH = 10 * 1024 * 1024
     pass
 
 
