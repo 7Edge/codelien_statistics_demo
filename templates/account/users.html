@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>用户列表</title>
-</head>
-<body>
-<div>
+
+
+{% extends 'index.html' %}
+
+{% block content %}
     <h3>用户列表</h3>
     <p><a href="{{ url_for('statistic.upload_code') }}">上传代码</a></p>
     <table border="1px">
@@ -17,15 +14,13 @@
         </tr>
         </thead>
         <tbody>
-            {% for user in users %}
-                <tr>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.username }}</td>
-                    <td><a href="{{ url_for('') }}"></a></td>
-                </tr>
-            {% endfor %}
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td><a href="{{ url_for('statistic.code_record', uid=user.id) }}">上传记录</a></td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
-</div>
-</body>
-</html>
+{% endblock %}

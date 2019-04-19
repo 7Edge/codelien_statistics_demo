@@ -22,6 +22,12 @@ STORE_PATH = os.path.join(os.path.join(BASE_DIR, 'static'), 'upload_codes')
 statistic_bp = Blueprint('statistic', __name__)
 
 
+# index页
+@statistic_bp.route('/index/')
+def index():
+    return render_template('index.html', **{})
+
+
 # 上传代码视图
 @statistic_bp.route('/upload_code/', methods=['POST', 'GET'])
 def upload_code():

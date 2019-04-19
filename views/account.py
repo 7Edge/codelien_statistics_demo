@@ -38,7 +38,14 @@ def login():
     session['username'] = loginname
     session['user_id'] = result.get('id')
 
-    return redirect(location=url_for(endpoint='.users'))
+    return redirect(location=url_for(endpoint='statistic.index'))
+
+
+@account_bp.route(rule='/logout/')
+def logout():
+    # 清空session
+    session.clear()
+    return redirect(location=url_for(endpoint='statistic.index'))
 
 
 @account_bp.route('/users/', methods=['GET', ])

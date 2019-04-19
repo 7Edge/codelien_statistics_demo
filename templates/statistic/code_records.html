@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>代码上传记录</title>
-</head>
-<body>
-<div>
+
+
+{% extends 'index.html' %}
+
+{% block content %}
     <h3>{{ user.username }} 的上传代码记录</h3>
     <table border="2px">
         <thead>
@@ -17,13 +14,14 @@
         </thead>
         <tbody>
         {% for foo in records %}
-            <th>{{ foo.id }}</th>
-            <th>{{ foo.codelines }}</th>
-            <th>{{ foo.date }}</th>
+            <tr>
+                <th>{{ foo.id }}</th>
+                <th>{{ foo.codelines }}</th>
+                <th>{{ foo.date }}</th>
+            </tr>
+
         {% endfor %}
 
         </tbody>
     </table>
-</div>
-</body>
-</html>
+{% endblock %}
