@@ -48,7 +48,7 @@ def fetch_many(sql, params, size=5):
 def insert(sql, params):
     conn, cursor = connection()
     result = cursor.execute(sql, params)
-    cursor.commit()
+    conn.commit()
     connection_close(conn, cursor)
     return result
 
