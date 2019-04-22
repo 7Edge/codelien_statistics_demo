@@ -16,6 +16,7 @@ import uuid
 from flask import Blueprint, request, session, render_template
 
 from mysql_connection import get_connection
+from utils import sql_helpers
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STORE_PATH = os.path.join(os.path.join(BASE_DIR, 'static'), 'upload_codes')
@@ -38,16 +39,23 @@ def upload_code():
     uid = session.get('user_id')
     today = datetime.datetime.now().strftime('%Y-%m-%d')
     # 一天只能提交一次代码
-    try:
-        connection = get_connection()
-        with connection.cursor() as cursor:
-            sql = "select * from code_statistics where user_id=%s and date = %s"
-            cursor.execute(sql, (uid, today))
-            data = cursor.fetchone()
-            if data:
-                return '今天已上传代码！'
-    finally:
-        connection.close()
+    # 没使用数据库连接池
+    # try:
+    #     connection = get_connection()
+    #     with connection.cursor() as cursor:
+    #         sql = "select * from code_statistics where user_id=%s and date = %s"
+    #         cursor.execute(sql, (uid, today))
+    #         data = cursor.fetchone()
+    #         if data:
+    #             return '今天已上传代码！'
+    # finally:
+    #     connection.close()
+
+    # 使用数据库连接池
+    sql = "select * from code_statistics where user_id=%s and date = %s"
+    data = sql_helpers.fetch_one(sql, (uid, today))
+    if data:
+        return '今天已上传代码'
 
     # 处理上传文件
     upload_file = request.files.get('codefile', None)
@@ -101,16 +109,23 @@ def upload_code():
             for line in fp:
                 line_cnt += 1
     # 3. 将提交代码写入到数据库中
-    try:
-        connection = get_connection()
-        with connection.cursor() as cursor:
-            sql = "insert into code_statistics (user_id, codelines, date) values(%s, %s, %s)"
-            result = cursor.execute(sql, (uid, line_cnt, today))
-            print(result)
-        connection.commit()
-    finally:
-        connection.close()
-    return 'upload success'
+    sql = "insert into code_statistics (user_id, codelines, date) values(%s, %s, %s)"
+    result = sql_helpers.insert(sql, (uid, line_cnt, today))
+    if result:
+        return 'upload success'
+
+    return 'upload fail'
+
+    # try:
+    #     connection = get_connection()
+    #     with connection.cursor() as cursor:
+    #         sql = "insert into code_statistics (user_id, codelines, date) values(%s, %s, %s)"
+    #         result = cursor.execute(sql, (uid, line_cnt, today))
+    #         print(result)
+    #     connection.commit()
+    # finally:
+    #     connection.close()
+    # return 'upload success'
 
 
 # 查看用户的上传记录
