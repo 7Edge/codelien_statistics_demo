@@ -38,6 +38,7 @@ def login():
         session.clear()
     session['username'] = loginname
     session['user_id'] = result.get('id')
+    # 头像url，写死一个
 
     return redirect(location=url_for(endpoint='statistic.index'))
 

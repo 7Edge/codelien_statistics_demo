@@ -1,3 +1,5 @@
+import re
+
 from flask import Flask, session, url_for, request, redirect
 
 from views.account import account_bp
@@ -16,9 +18,12 @@ app.register_blueprint(blueprint=statistic_bp)
 @app.before_request
 def auth():
     white_urls = [url_for('account_bp.login'), url_for('hello_world')]
+    static_re = re.compile(pattern=r'/static')
     if request.path in white_urls:
         return None
     if session.get('username'):
+        return None
+    if static_re.match(request.path):
         return None
 
     return redirect(url_for('account_bp.login'))
@@ -30,4 +35,4 @@ def hello_world():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

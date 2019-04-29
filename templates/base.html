@@ -1,0 +1,72 @@
+<!doctype html>
+
+<html lang="zh-CN">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap4/bootstrap.min.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/csdemo/dashboard.css') }}">
+
+    {% block mycss %}
+
+    {% endblock %}
+
+    <title>
+        {% block title %}
+            代码统计系统
+        {% endblock %}
+    </title>
+</head>
+<body>
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{ url_for('statistic.index') }}"><span data-feather="code"></span>&nbsp;代码上传统计系统</a>
+    <ul class="navbar-nav px-3  flex-row justify-content-end">
+        {% if  session.username %}
+            <li class="nav-item mr-4 ">
+                <a class="nav-link text-warning" href="#"><span data-feather="user"></span>&nbsp;{{ session.username }}
+                </a>
+            </li>
+            <li class="nav-item mr-4">
+                <a class="nav-link" href="{{ url_for('account_bp.logout') }}">注销</a>
+            </li>
+        {% else %}
+            {#            <li class="nav-item mr-4">#}
+            {#                <a class="nav-link" href="{{ url_for('account_bp.login') }}">登陆</a>#}
+            {#            </li>#}
+            <li class="nav-item mr-4">
+                <a class="nav-link" href="#">注册</a>
+            </li>
+        {% endif %}
+
+    </ul>
+</nav>
+
+{% block body %}
+
+{% endblock %}
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="{{ url_for('static', filename='js/jquery3.4/jquery-3.4.0.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap4/bootstrap.bundle.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap4/bootstrap.js') }}"></script>
+<script src="{{ url_for('static', filename='js/feather/feather.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/chartjs/Chart.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/csdemo/dashboard.js') }}"></script>
+{% block myscript %}
+
+{% endblock %}
+</body>
+</html>
+
+
+
+
+
