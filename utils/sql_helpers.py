@@ -27,7 +27,7 @@ def fetch_one(sql, params):
 
 
 # 获取所有数据
-def fetch_all(sql, params):
+def fetch_all(sql, params=None):
     conn, cursor = connection()
     cursor.execute(sql, params)
     result = cursor.fetchall()
@@ -36,7 +36,7 @@ def fetch_all(sql, params):
 
 
 # 获取指定行数据
-def fetch_many(sql, params, size=5):
+def fetch_many(sql, params=None, size=5):
     conn, cursor = connection()
     cursor.execute(sql, params)
     result = cursor.fetchmany(size=size)
@@ -45,7 +45,7 @@ def fetch_many(sql, params, size=5):
 
 
 # 插入一条数据
-def insert(sql, params):
+def insert(sql, params=None):
     conn, cursor = connection()
     result = cursor.execute(sql, params)
     conn.commit()

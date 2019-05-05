@@ -9,6 +9,7 @@ from flask import Blueprint, session, redirect, render_template, request, url_fo
 
 from mysql_connection import get_connection
 from utils.encrypt import encrypt_pwd
+from utils import sql_helpers
 
 account_bp = Blueprint(name='account_bp', import_name=__name__)
 
@@ -55,10 +56,9 @@ def users():
     try:
         connection = get_connection()
         with connection.cursor() as cursor:
-            sql = "select id, username from `account`"
+            sql = "select id, username from `account` order by id"
             cursor.execute(sql)
             result = cursor.fetchmany(size=50)
-            print(result)
     finally:
         connection.close()
     return render_template('account/users.html', **{'users': result})

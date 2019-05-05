@@ -1,11 +1,22 @@
-
-
 {% extends 'index.html' %}
 
-{% block content %}
-    <h3>用户列表</h3>
-    <p><a href="{{ url_for('statistic.upload_code') }}">上传代码</a></p>
-    <table border="1px">
+{% block main %}
+    <div class="d-flex justify-content-between my-2">
+        <h3>用户列表</h3>
+        <a class="btn btn-info" href="{{ url_for('statistic.upload_code') }}"><span
+                data-feather="upload"></span>上传代码</a>
+    </div>
+    <hr>
+    <h4>上传数Top3</h4>
+
+    <div class="card my-5">
+        <div class="card-body">
+            <canvas id="top3Chart" width="300" height="280"></canvas>
+        </div>
+    </div>
+
+    <h4>所有用户上传记录表</h4>
+    <table class="table table-hover mt-5">
         <thead>
         <tr>
             <th>用户id</th>
@@ -16,11 +27,81 @@
         <tbody>
         {% for user in users %}
             <tr>
-                <td>{{ user.id }}</td>
+                <th scope="row">{{ user.id }}</th>
                 <td>{{ user.username }}</td>
-                <td><a href="{{ url_for('statistic.code_record', uid=user.id) }}">上传记录</a></td>
+                <td><a class="btn btn-outline-success btn-sm"
+                       href="{{ url_for('statistic.code_record', uid=user.id) }}">上传记录</a></td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+{% endblock %}
+
+{% block myscript %}
+    <script>
+        window.onload = function () {
+
+            var chart_labels = [];
+            var chart_data = [];
+
+            $.ajax({
+                url: '{{ url_for('statistic.top3') }}',
+                type: 'GET',
+                async: false,
+                success: function (data) {
+
+                    $.each(data, function (idx, val) {
+                        console.log(chart_data);
+                        console.log(chart_labels);
+                        chart_data.push(val['code_cnt']);
+                        chart_labels.push(val['username']);
+                    });
+
+                    console.log(chart_data);
+                    console.log(chart_labels);
+                    console.log(data[0])
+                }
+            });
+
+
+            console.log(chart_data);
+            console.log(chart_labels);
+
+            let ctx = document.getElementById('top3Chart').getContext('2d');
+            let myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: chart_labels,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: chart_data,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        };
+
+
+    </script>
 {% endblock %}

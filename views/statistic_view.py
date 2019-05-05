@@ -13,7 +13,7 @@ import datetime
 import filetype
 import uuid
 
-from flask import Blueprint, request, session, render_template
+from flask import Blueprint, request, session, render_template, jsonify
 
 from mysql_connection import get_connection
 from utils import sql_helpers
@@ -149,5 +149,18 @@ def code_record(uid):
                                                                                    'user': user})
 
 
-if __name__ == '__main__':
-    pass
+# top3用户
+@statistic_bp.route('/top3/')
+def top3():
+    try:
+        sql = "select ac.username as username, ac.id as user_id , ifnull(sum(cs.codelines), 0) as code_cnt from account ac left join code_statistics cs on ac.id = cs.user_id group by ac.username order by code_cnt desc limit 3;"
+        data = sql_helpers.fetch_all(sql)
+
+        for idx, item in enumerate(data):
+            data[idx]['code_cnt'] = float(item['code_cnt'])
+        print(data)
+
+    except Exception:
+        raise
+
+    return jsonify(data)
