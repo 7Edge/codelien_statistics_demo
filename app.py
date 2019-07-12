@@ -6,6 +6,7 @@ from views.account import account_bp
 from views.statistic_view import statistic_bp
 
 app = Flask(__name__)
+# print(session,type(session))
 app.config.from_object(obj='settings.DevConfig')
 # print(app.config.get('DEBUG'))
 # print(app.config.get('SECRET_KEY'))

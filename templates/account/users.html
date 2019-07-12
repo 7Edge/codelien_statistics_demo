@@ -51,21 +51,12 @@
                 success: function (data) {
 
                     $.each(data, function (idx, val) {
-                        console.log(chart_data);
-                        console.log(chart_labels);
                         chart_data.push(val['code_cnt']);
                         chart_labels.push(val['username']);
                     });
-
-                    console.log(chart_data);
-                    console.log(chart_labels);
-                    console.log(data[0])
                 }
             });
 
-
-            console.log(chart_data);
-            console.log(chart_labels);
 
             let ctx = document.getElementById('top3Chart').getContext('2d');
             let myChart = new Chart(ctx, {

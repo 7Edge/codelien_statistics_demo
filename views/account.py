@@ -10,6 +10,7 @@ from flask import Blueprint, session, redirect, render_template, request, url_fo
 from mysql_connection import get_connection
 from utils.encrypt import encrypt_pwd
 from utils import sql_helpers
+from forms import LoginForm
 
 account_bp = Blueprint(name='account_bp', import_name=__name__)
 
@@ -17,7 +18,8 @@ account_bp = Blueprint(name='account_bp', import_name=__name__)
 @account_bp.route(rule='/login/', endpoint='login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
-        return render_template(template_name_or_list='account/login.html')
+        form = LoginForm()
+        return render_template(template_name_or_list='account/login.html', **{'form': form})
     # 获取用户名和密码
     loginname = request.form.get('loginname')
     password = request.form.get('password')

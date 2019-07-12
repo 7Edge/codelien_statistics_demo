@@ -12,6 +12,8 @@ pymysql = "*"
 pytz = "*"
 filetype = "*"
 dbutils = "*"
+flask-wtf = "*"
+sqlalchemy = "*"
 
 [requires]
 python_version = "3.7"
